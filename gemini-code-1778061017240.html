@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love!</title>
+    <style>
+        :root {
+            --env-bg: #ffadad;
+            --env-flap: #ff8585;
+            --env-inner: #ff9999;
+            --primary-pink: #ff4d6d;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+        }
+
+        /* ၁။ စာအိတ် စာမျက်နှာ */
+        #envelope-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: all 0.6s ease-in-out;
+            z-index: 20;
+            position: relative;
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background-color: var(--env-bg);
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.05);
+        }
+
+        /* စာအိတ် အဖုံး (Flap) */
+        .envelope-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 5;
+            border-top: 100px solid var(--env-flap);
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+        }
+
+        /* စာအိတ် အတွင်းသား (Pocket Effect) */
+        .envelope-container::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            z-index: 2;
+            border-left: 140px solid #ffc2c2;
+            border-right: 140px solid #ffc2c2;
+            border-bottom: 90px solid #ffb3b3;
+            border-top: 90px solid transparent;
+        }
+
+        .name-tag {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: var(--primary-pink);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        /* ၂။ ဒုတိယစာမျက်နှာ (မွေးနေ့ကတ်) */
+        #content-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease;
+            z-index: 10;
+        }
+
+        .wish-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px;
+            border-radius: 25px;
+            text-align: center;
+            max-width: 450px;
+            width: 85%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            transform: translateY(30px);
+            transition: transform 0.8s ease;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 6px solid white;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-pink);
+            font-size: 1.8rem;
+            margin: 0 0 15px 0;
+        }
+
+        p {
+            color: #444;
+            line-height: 1.7;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* ၃။ Transitions */
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+
+        .show-content {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        .show-content .wish-container {
+            transform: translateY(0);
+        }
+
+        /* ၄။ Flying Hearts */
+        .heart {
+            position: fixed;
+            top: 110vh;
+            color: #ff4d6d;
+            pointer-events: none;
+            z-index: 1;
+            animation: moveUp 6s linear infinite;
+        }
+
+        @keyframes moveUp {
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ပထမစာမျက်နှာ -->
+    <div id="envelope-page">
+        <div class="envelope-container" onclick="openWish()">
+            <div class="name-tag">For My Love ❤️</div>
+        </div>
+        <p style="margin-top: 30px; color: white; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+            စာအိတ်လေးကို နှိပ်လိုက်ပါ
+        </p>
+    </div>
+
+    <!-- ဒုတိယစာမျက်နှာ -->
+    <div id="content-page">
+        <div class="wish-container">
+            <!-- ပုံနာမည်ကို me.jpg ဟု ပေးထားပါ -->
+            <img src="me.jpg" alt="Birthday Person" class="profile-img" onerror="this.src='https://via.placeholder.com/160'">
+            <h1>Happy Birthday! 🎂</h1>
+            <p>Happy Birthday ပါ အချစ်လေး။ မွေးနေ့ကစပြီး ဒီထက်မက ပိုလှ၊ ပိုတော်ပြီး စိတ်ချမ်းသာစရာကောင်းတဲ့ နေ့ရက်တွေကို ပိုင်ဆိုင်နိုင်ပါစေ။ ကိုယ့်ဘဝရဲ့ ကံကောင်းခြင်းတစ်ခုဖြစ်တဲ့ မင်းလေး... ပျော်ရွှင်စရာ မွေးနေ့လေးဖြစ်ပါစေ။ 🎈 ကိုယ် အမြဲတမ်း မင်းဘေးမှာ ရှိနေမယ်ဆိုတာ မမေ့နဲ့နော်။ ✨</p>
+        </div>
+    </div>
+
+    <script>
+        function openWish() {
+            // စာအိတ်ကို ဖျောက်မယ်
+            document.getElementById('envelope-page').classList.add('fade-out');
+            
+            // ခဏနေရင် ဒုတိယစာမျက်နှာ ပြမယ်
+            setTimeout(() => {
+                document.getElementById('envelope-page').style.display = 'none';
+                document.getElementById('content-page').classList.add('show-content');
+            }, 600);
+        }
+
+        // Flying Hearts Animation
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.opacity = Math.random() * 0.7 + 0.3;
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+        setInterval(createHeart, 400);
+    </script>
+
+</body>
+</html>
